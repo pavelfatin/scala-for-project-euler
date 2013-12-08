@@ -1,6 +1,6 @@
-def ps(s: String): Seq[String] = if(s.size == 1) Seq(s) else 
-  s.flatMap(c => ps(s.filterNot(_ == c)).map(c +))
+def ps(s: String): Iterator[String] = if (s.length == 1) Iterator(s)
+  else s.toIterator.flatMap(c => ps(s.filter(c !=)).map(c +))
 
-val r = ps("0123456789")(999999).toLong
+val r = ps("0123456789").drop(999999).next().toLong
 
-assert(r == 2783915460L) // 7 s
+assert(r == 2783915460L) // 712 ms
