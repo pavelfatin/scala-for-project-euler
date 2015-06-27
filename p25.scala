@@ -1,6 +1,5 @@
-lazy val fs: Stream[BigInt] = 
-  0 #:: 1 #:: fs.zip(fs.tail).map(p => p._1 + p._2)
+lazy val fs: Stream[BigInt] = 0 #:: fs.scanLeft(BigInt(1))(_ + _)
 
-val r = fs.view.takeWhile(_.toString.length < 1000).size
+val r = fs.view.takeWhile(_.toString.length < 1000).length
 
-assert(r == 4782) // 468 ms
+assert(r == 4782) // 468 ms
