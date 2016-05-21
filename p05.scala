@@ -1,4 +1,7 @@
-val r = Range(20, Int.MaxValue)
-  .find(n => Range(2, 21).forall(n % _ == 0)).get
+def gcd(a: Int, b: Int): Int = if (a % b == 0) b else gcd(b, a % b)
 
-assert(r == 232792560) // 23 s
+def lcm(a: Int, b: Int): Int = a * (b / gcd(a, b))
+
+val r = (1 to 20).reduce(lcm(_, _))
+
+assert(r == 232792560)
