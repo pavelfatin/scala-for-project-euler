@@ -1,8 +1,14 @@
-def e(n: Int, i: Int): Long = {
-  if (i == 1) n.toLong
-  else (n * e(n, i-1)) % 10000000000L
+def f(n: Int): List[Int] = {
+  def go(a: Int, b: Int): List[Int] = {
+    if (a < b * b) List(a)
+    else if (a % b == 0) b :: go(a / b, b)
+    else go(a, b + 1)
+  }
+  go(n, 2)
 }
 
-val r = (1 to 1000).map(x => e(x, x)).sum % 10000000000L
+val r = Stream.from(1).find(n =>
+  (n until n + 4).forall(f(_).distinct.size == 4)
+).get
 
-assert(r == 9110846700L)
+assert(r == 134043)

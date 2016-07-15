@@ -1,12 +1,15 @@
-def solve(n: Int) = {
-  val solutions = for {
-    i <- (1 to n / 3); j <- (i * 2 to n * 2 / 3)
-    if (n - j) * (n - j) == (j - i) * (j - i) + i * i
-  } yield (i, j - i, n - j)
+def gcd(a: Int, b: Int): Int = if (a % b == 0) b else gcd(b, a % b)
 
-  (n, solutions.size)
-}
+val limit = 1000
 
-val r = (1 to 1000).map(solve).maxBy(_._2)._1
+val lengths = Array.fill(limit + 1)(0)
+
+for (
+  i <- 2 to math.sqrt(limit / 2).toInt;
+  j <- 1 to i - 1 if (i + j) % 2 == 1 && gcd(i, j) == 1;
+  k <- 2 * i * (i + j) to limit by 2 * i * (i + j)
+) lengths(k) += 1
+
+val r = lengths.indexOf(lengths.max)
 
 assert(r == 840)

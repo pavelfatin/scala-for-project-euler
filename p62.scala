@@ -1,9 +1,15 @@
-def pow3(n: Int) = math.pow(n, 3).toLong
+import scala.collection.mutable.HashMap
 
-val ps = Stream.from(1).map(n => (n, pow3(n).toString.sorted))
+def c(n: Int) = math.pow(n, 3).toLong.toString.sorted
 
-val pss = ps.map(p => ps.takeWhile(_._1 <= p._1).filter(_._2 == p._2))
+val hm = HashMap[String, List[Int]]()
 
-val r = pow3(pss.find(_.size == 5).get.head._1)
+val ps = Stream.from(0).map(n => {
+  val v = hm.getOrElse(c(n), List[Int]())
+  hm.update(c(n), v :+ n)
+  v :+ n
+})
+
+val r = math.pow(ps.find(_.size == 5).get.head, 3).toLong
 
 assert(r == 127035954683L)

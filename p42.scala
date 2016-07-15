@@ -4,7 +4,6 @@ def isTriNum(n: Int): Boolean = {
 }
 
 val r = io.Source.fromFile("words.txt").mkString.split(",")
-  .map(_.init.tail.map(_.asDigit - 9).sum)
-  .filter(isTriNum).size
+  .map(_.init.tail.map(_ - 64).sum).filter(isTriNum).size
 
 assert(r == 162)

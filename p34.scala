@@ -1,11 +1,11 @@
 def max(d: Int) = math.pow(10, d).toInt - 1
 
-def factorial(n: Int): Int = if (n == 0) 1 else n * factorial(n-1)
+val f = List(1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880)
 
-val limit = Stream.from(1)
-  .find(d => max(d) > max(d).toString.map(x => factorial(x.asDigit)).sum).get
+def g(n: Int) = n.toString.map(d => f(d.asDigit)).sum
 
-val r = (3 to max(limit))
-  .filter(n => n == n.toString.map(c => factorial(c.asDigit)).sum).sum
+val limit = Stream.from(1).find(d => max(d) > g(max(d))).get
+
+val r = (3 to max(limit)).filter(n => n == g(n)).sum
 
 assert(r == 40730)
